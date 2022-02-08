@@ -7,7 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="warehouses.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="warehouses.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CarSale.Business\CarSale.Business.csproj" />
   </ItemGroup>
 
 </Project>

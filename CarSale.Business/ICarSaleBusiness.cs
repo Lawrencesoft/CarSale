@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarSale.Database.Model;
 
 namespace CarSale.Business
 {
-    internal interface ICarSaleBusiness
+    public interface ICarSaleBusiness
     {
+        /// <summary>
+        /// Get all the vehicle details from Business
+        /// </summary>
+        /// <returns></returns>
+        public IList<Vehicles> GetAllVehicles();
     }
 }

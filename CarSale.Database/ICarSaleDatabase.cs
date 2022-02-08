@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CarSale.Database.Model;
 
 namespace CarSale.Database
 {
-    internal interface ICarSaleDatabase
+    /// <summary>
+    /// This interface helps to define the DB layer methods
+    /// </summary>
+    public interface ICarSaleDatabase
     {
+        /// <summary>
+        /// Get all the vehicle details from DB
+        /// </summary>
+        /// <returns></returns>
+        public IList<Vehicles> GetAllVehicles();
     }
 }

@@ -1,0 +1,16 @@
+/.vs/CarSale.API
+/CarSale.API.Test/bin/Debug/net6.0
+/CarSale.API.Test/obj/Debug/net6.0
+/CarSale.Business/bin/Debug/net6.0
+/CarSale.API.Test/obj
+/CarSale.Business/bin/Release/net6.0
+/CarSale.Business/obj
+/CarSale.Database/bin/Debug/net6.0
+/CarSale.Database/bin/Release/net6.0
+/CarSale.Database/obj
+/CareSale.API/Properties/PublishProfiles
+/CareSale.API/bin/Debug/net6.0
+/CareSale.API/bin/Release/net6.0
+/CareSale.API/obj/Debug/net6.0
+/CareSale.API/obj/Release/net6.0
+/CareSale.API/obj
