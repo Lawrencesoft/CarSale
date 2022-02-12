@@ -1,0 +1,8 @@
+@import "core";
+
+.history-home-container {
+    padding: $gutter-base * 5 $gutter-base * 5;
+    background-color: $color-grey-3;
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+}
