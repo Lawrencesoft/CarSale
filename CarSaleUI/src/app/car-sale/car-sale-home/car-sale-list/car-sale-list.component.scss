@@ -5,4 +5,12 @@
         color: $color-grey;
         font-size: $font-size-medium;
     }
+
+    .grid-label{
+        color:$color-grey-6
+    }
+
+    .details{
+        padding: $gutter-base*6;
+    }
 }

@@ -1,25 +1,68 @@
+
+
 <div class="car-sale-table-container">
-    <table mat-table [dataSource]="dataSource" class="full-width">
-        <ng-container *ngFor="let column of columns; let i=index;let isLast=last" [matColumnDef]="column.columnDef">
-            <th mat-header-cell *matHeaderCellDef [ngStyle]="column.style">
-               <b> {{column.header}}</b>
-            </th>
-            <td mat-cell *matCellDef="let row;let j=index;" [ngStyle]="column.style" >
-                {{column.cell(row)}}
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="8">
-                <div fxLayout="row" fxLayoutGap="15px" class="text-align-center full-width"
-                    fxLayoutAlign="center center">
-                    <mat-icon class="info-icon">info</mat-icon>
-                    <p class="text-size-small">No records found!</p>
+    <mat-drawer-container>
+
+        <mat-drawer #drawer mode="side" position="end" [opened]="openDrawer">
+            <div fxLayout="column" fxLayoutGap="15px" class="details">
+                <div fxLayout="row" fxLayoutGap="15px">
+                   <span class="grid-label">Warehouse Name:</span>
+                   <b>{{selectedCarDetails?.warehouseName}}</b>
                 </div>
-            </td>
-        </tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="[25,50,75,100]" showFirstLastButtons>
-    </mat-paginator>
+                <div fxLayout="row" fxLayoutGap="15px">
+                   <span class="grid-label">Car Location:</span>
+                   <b>{{selectedCarDetails?.carLocation}}</b>
+                </div>
+                <div fxLayout="row" fxLayoutGap="15px">
+                   <span class="grid-label">Make:</span>
+                   <b>{{selectedCarDetails?.make}}</b>
+                </div>
+                <div fxLayout="row" fxLayoutGap="15px">
+                   <span class="grid-label">Model:</span>
+                   <b>{{selectedCarDetails?.model}}</b>
+                </div>
+                <div fxLayout="row" fxLayoutGap="15px">
+                    <span class="grid-label">Year Model:</span>
+                    <b>{{selectedCarDetails?.yearModel}}</b>
+                 </div>
+                <div fxLayout="row" fxLayoutGap="15px">
+                   <span class="grid-label">Price:</span>
+                   <b>{{selectedCarDetails?.price}}</b>
+                </div>
+                
+                <div fxLayout="row" fxLayoutGap="15px">
+                   <span class="grid-label">Date Added:</span>
+                   <b>{{selectedCarDetails?.dateAdded | date: dateFormat}}</b>
+                </div>
+            </div>
+        </mat-drawer>
+        <mat-drawer-content>
+            <table mat-table [dataSource]="dataSource" class="full-width">
+                <ng-container *ngFor="let column of columns; let i=index;let isLast=last" [matColumnDef]="column.columnDef">
+                    <th mat-header-cell *matHeaderCellDef [ngStyle]="column.style">
+                       <b> {{column.header}}</b>
+                    </th>
+                    <td mat-cell *matCellDef="let row;let j=index;" [ngStyle]="column.style" >
+                        {{column.cell(row)}}
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onClick(row)">
+                    <div>hello</div>
+                </tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="8">
+                        <div fxLayout="row" fxLayoutGap="15px" class="text-align-center full-width"
+                            fxLayoutAlign="center center">
+                            <mat-icon class="info-icon">info</mat-icon>
+                            <p class="text-size-small">No records found!</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[25,50,75,100]" showFirstLastButtons>
+            </mat-paginator>
+            
+        </mat-drawer-content>
+    </mat-drawer-container>
 </div>

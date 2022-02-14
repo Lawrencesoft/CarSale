@@ -15,21 +15,13 @@ export class CarSaleListComponent implements OnInit {
   public dataSource: any;
   public displayedColumns: any;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild('drawer', { static: true }) drawer!: any;
   public selectedId!: number;
+  public selectedCarDetails:any;
+  public dateFormat=Constants.dateFormat;
+  public openDrawer!:boolean;
 
   columns = [
-    {
-      columnDef: 'warehouseName',
-      header: 'Warehouse Name',
-      cell: (element: any) => element.warehouseName ? `${element.warehouseName}` : '-',
-      style: { width: '80px', 'min-width': '80px' },
-    },
-    {
-      columnDef: 'carLocation',
-      header: 'Car Location',
-      cell: (element: any) => element.carLocation ? `${element.carLocation}` : '-',
-      style: { width: '80px', 'min-width': '80px' },
-    },
     {
       columnDef: 'make',
       header: 'Make',
@@ -57,7 +49,7 @@ export class CarSaleListComponent implements OnInit {
     {
       columnDef: 'dateAdded',
       header: 'Date Added',
-      cell: (element: any) => element.dateAdded ? `${this.datePipe.transform(element.dateAdded,Constants.dateFormat)}` : '-',
+      cell: (element: any) => element.dateAdded ? `${this.datePipe.transform(element.dateAdded,this.dateFormat)}` : '-',
       style: { width: '80px', 'min-width': '80px' },
     },
     {
@@ -94,6 +86,15 @@ export class CarSaleListComponent implements OnInit {
       this.displayedColumns = this.columns.map(c => c.columnDef);
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  onClick(row:any){
+   if(row.licensed){
+     this.openDrawer=!this.openDrawer;
+     this.selectedCarDetails=row;
+   }else{
+    this.openDrawer=false;
+   }
   }
 
 }
