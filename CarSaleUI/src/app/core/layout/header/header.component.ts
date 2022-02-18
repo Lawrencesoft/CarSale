@@ -17,8 +17,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  logout() {
+  onLogout() {
     this.authService.isLoggedIn = false;
+    this.authService.carPrice=0;
     localStorage.setItem('isLoggedIn', 'false');
     this.router.navigate([ '/login' ]);
   }

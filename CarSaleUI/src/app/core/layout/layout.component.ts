@@ -19,11 +19,14 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get('./assets/appSettings.json').subscribe((resp: any) => {
+    this.fetchApiDetails();
+  }
+
+  fetchApiDetails() {
+    this.authService.fetchApiDetails().subscribe((resp: any) => {
       this.authService.apiUrl = resp.apiUrl;
-      this.authService.apiKey = resp.apiKey;
       this.authService.isLoggedIn = (localStorage.getItem('isLoggedIn') === 'true');
-    })
+    });
   }
 
 }

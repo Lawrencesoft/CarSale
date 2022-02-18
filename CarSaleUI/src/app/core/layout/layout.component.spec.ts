@@ -1,4 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CommonMaterialModule } from 'src/app/common-material/common-material.module';
+import { AuthService } from 'src/app/shared/auth.service';
 
 import { LayoutComponent } from './layout.component';
 
@@ -8,9 +14,12 @@ describe('LayoutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LayoutComponent ]
+      declarations: [ LayoutComponent ],
+      imports: [ BrowserAnimationsModule, FlexLayoutModule, CommonMaterialModule, HttpClientModule ],
+      providers: [ AuthService, HttpClient ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA ]
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
@@ -19,7 +28,14 @@ describe('LayoutComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('[LayoutComponent-create ] - should create the component', () => {
     expect(component).toBeTruthy();
   });
+
+  it('[LayoutComponent-api ] - should check apiUrl to be the value in appsettings.json',
+    inject([ AuthService ], (authService: AuthService) => {
+      authService.fetchApiDetails().subscribe(resp => {
+        expect(authService.apiUrl).toBe('https://localhost:7062/');
+      })
+    }));
 });

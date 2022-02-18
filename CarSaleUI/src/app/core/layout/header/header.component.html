@@ -7,6 +7,10 @@
         <app-navbar *ngIf="authService.isLoggedIn"></app-navbar>
     </div>
     <div fxLayoutAlign="center center" class="block-height" *ngIf="authService.isLoggedIn">
-        <button mat-button color="primary" class="text-uppercase" (click)="logout()">logout</button>
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px" class="basket">
+            <mat-icon>shopping_cart</mat-icon>
+            <span id="basket-price" *ngIf="authService.carPrice">({{authService.carPrice.toFixed(2)}})</span>
+        </div>
+        <button mat-button color="primary" class="text-uppercase" (click)="onLogout()">logout</button>
     </div>
 </div>

@@ -4,23 +4,28 @@ import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Constants } from 'src/app/shared/constants';
 import { CarSaleService } from '../../services/car-sale.service';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-car-sale-list',
   templateUrl: './car-sale-list.component.html',
-  styleUrls: ['./car-sale-list.component.scss']
+  styleUrls: [ './car-sale-list.component.scss' ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
-export class CarSaleListComponent implements OnInit {
-  public historyList: any = [];
-  public dataSource: any;
-  public displayedColumns: any;
+export class CarSaleListComponent {
+  dataSource: any;
+  columnsToDisplay: any;
+  public dateFormat = Constants.dateFormat;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-  @ViewChild('drawer', { static: true }) drawer!: any;
-  public selectedId!: number;
-  public selectedCarDetails:any;
-  public dateFormat=Constants.dateFormat;
-  public openDrawer!:boolean;
-
+  expandedElement!: any | null;
+  carsInBasket: any[] = [];
   columns = [
     {
       columnDef: 'make',
@@ -49,7 +54,7 @@ export class CarSaleListComponent implements OnInit {
     {
       columnDef: 'dateAdded',
       header: 'Date Added',
-      cell: (element: any) => element.dateAdded ? `${this.datePipe.transform(element.dateAdded,this.dateFormat)}` : '-',
+      cell: (element: any) => element.dateAdded ? `${this.datePipe.transform(element.dateAdded, this.dateFormat)}` : '-',
       style: { width: '80px', 'min-width': '80px' },
     },
     {
@@ -57,13 +62,20 @@ export class CarSaleListComponent implements OnInit {
       header: 'Licensed',
       cell: (element: any) => element.licensed ? `${element.licensed}` : '-',
       style: { width: '80px', 'min-width': '80px' },
+    },
+    {
+      columnDef: 'actions',
+      header: 'Actions',
+      cell: (element: any) => element.id ? `${element.id}` : '',
+      style: { width: '80px', 'min-width': '80px' },
     }
   ];
 
   constructor(
     private matPaginator: MatPaginatorIntl,
-    private carSaleService:CarSaleService,
-    private datePipe:DatePipe
+    private carSaleService: CarSaleService,
+    private datePipe: DatePipe,
+    private authService: AuthService
   ) {
     this.matPaginator.getRangeLabel = (page, pageSize, length) => {
       if (length === 0 || pageSize === 0) {
@@ -80,21 +92,24 @@ export class CarSaleListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.carSaleService.getCarList().subscribe((carLlist:any)=>{
+    this.carSaleService.getCarList().subscribe((carLlist: any) => {
       this.dataSource = (carLlist?.length) ?
         new MatTableDataSource(carLlist) : [];
-      this.displayedColumns = this.columns.map(c => c.columnDef);
+      this.columnsToDisplay = this.columns.map(c => c.columnDef);
       this.dataSource.paginator = this.paginator;
     });
   }
 
-  onClick(row:any){
-   if(row.licensed){
-     this.openDrawer=!this.openDrawer;
-     this.selectedCarDetails=row;
-   }else{
-    this.openDrawer=false;
-   }
+  onClick(row: any, index: any) {
+    if (index === this.columns.length - 1) {
+      this.carsInBasket.push(row);
+      this.authService.carPrice = this.carsInBasket.map(c => c.price).reduce((a: any, b: any) => a + b, 0);
+    } else {
+      if (row?.id === this.expandedElement?.id) {
+        this.expandedElement = null;
+      } else {
+        this.expandedElement = (row && row.licensed) ? row : null;
+      }
+    }
   }
-
 }

@@ -6,11 +6,59 @@
         font-size: $font-size-medium;
     }
 
-    .grid-label{
-        color:$color-grey-6
+    .green-color {
+        color: $color-green;
     }
 
-    .details{
-        padding: $gutter-base*6;
+    .red-color {
+        color: $color-red;
+    }
+
+    .btn-height {
+        min-height: 45px;
+    }
+
+    .add-btn {
+        @extend .btn-height;
+        color: $color-blue;
+        .icon {
+            color: $color-blue;
+            font-size: $font-size-medium;
+            line-height: 25px;
+        }
+    }
+
+    .grid-label {
+        color: $color-grey-6;
+    }
+    table {
+        width: 100%;
+    }
+
+    tr.detail-row {
+        height: 0;
+    }
+
+    tr.element-row:not(.expanded-row):hover {
+        background: whitesmoke;
+    }
+
+    tr.element-row:not(.expanded-row):active {
+        background: #efefef;
+    }
+
+    .element-row td {
+        border-bottom-width: 0;
+    }
+
+    .element-detail {
+        overflow: hidden;
+        display: flex;
+        .element-detail-content {
+            min-width: 80px;
+            padding: 8px;
+            margin: 8px 0;
+            height: 110px;
+        }
     }
 }

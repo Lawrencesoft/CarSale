@@ -70,8 +70,19 @@ body {
     padding-top: $gutter-base * 2;
 }
 
+.padding-right-10 {
+    padding-right: $gutter-base * 2;
+}
+.padding-right-5 {
+    padding-right: $gutter-base;
+}
+
 .padding-top-bottom-15 {
     padding: $gutter-base * 3 $gutter-zero;
+}
+
+.padding-top-bottom-20 {
+    padding: $gutter-base * 4 $gutter-zero;
 }
 
 .padding-top-bottom-10 {

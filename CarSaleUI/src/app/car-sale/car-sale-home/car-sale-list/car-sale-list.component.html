@@ -1,68 +1,51 @@
-
-
 <div class="car-sale-table-container">
-    <mat-drawer-container>
-
-        <mat-drawer #drawer mode="side" position="end" [opened]="openDrawer">
-            <div fxLayout="column" fxLayoutGap="15px" class="details">
-                <div fxLayout="row" fxLayoutGap="15px">
-                   <span class="grid-label">Warehouse Name:</span>
-                   <b>{{selectedCarDetails?.warehouseName}}</b>
-                </div>
-                <div fxLayout="row" fxLayoutGap="15px">
-                   <span class="grid-label">Car Location:</span>
-                   <b>{{selectedCarDetails?.carLocation}}</b>
-                </div>
-                <div fxLayout="row" fxLayoutGap="15px">
-                   <span class="grid-label">Make:</span>
-                   <b>{{selectedCarDetails?.make}}</b>
-                </div>
-                <div fxLayout="row" fxLayoutGap="15px">
-                   <span class="grid-label">Model:</span>
-                   <b>{{selectedCarDetails?.model}}</b>
-                </div>
-                <div fxLayout="row" fxLayoutGap="15px">
-                    <span class="grid-label">Year Model:</span>
-                    <b>{{selectedCarDetails?.yearModel}}</b>
-                 </div>
-                <div fxLayout="row" fxLayoutGap="15px">
-                   <span class="grid-label">Price:</span>
-                   <b>{{selectedCarDetails?.price}}</b>
-                </div>
-                
-                <div fxLayout="row" fxLayoutGap="15px">
-                   <span class="grid-label">Date Added:</span>
-                   <b>{{selectedCarDetails?.dateAdded | date: dateFormat}}</b>
-                </div>
-            </div>
-        </mat-drawer>
-        <mat-drawer-content>
-            <table mat-table [dataSource]="dataSource" class="full-width">
-                <ng-container *ngFor="let column of columns; let i=index;let isLast=last" [matColumnDef]="column.columnDef">
-                    <th mat-header-cell *matHeaderCellDef [ngStyle]="column.style">
-                       <b> {{column.header}}</b>
-                    </th>
-                    <td mat-cell *matCellDef="let row;let j=index;" [ngStyle]="column.style" >
-                        {{column.cell(row)}}
-                    </td>
+    <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+        <ng-container [matColumnDef]="column.columnDef" *ngFor="let column of columns; let i=index;let isLast=last">
+            <th mat-header-cell *matHeaderCellDef [ngStyle]="column.style"> <b> {{column.header}}</b> </th>
+            <td mat-cell *matCellDef="let element" [ngStyle]="column.style" [class.cursor-pointer]="element?.licensed"
+                (click)="onClick(element,i)">
+                <ng-container *ngIf="i=== columns.length-2; else action_template">
+                    <mat-icon [ngClass]="element.licensed?'green-color':'red-color'">
+                        {{element.licensed?'check_circle':'highlight_off'}}</mat-icon>
                 </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onClick(row)">
-                    <div>hello</div>
-                </tr>
-                <tr class="mat-row" *matNoDataRow>
-                    <td class="mat-cell" colspan="8">
-                        <div fxLayout="row" fxLayoutGap="15px" class="text-align-center full-width"
-                            fxLayoutAlign="center center">
-                            <mat-icon class="info-icon">info</mat-icon>
-                            <p class="text-size-small">No records found!</p>
+                <ng-template #action_template>
+                    <ng-container *ngIf="i=== columns.length-1; else other_template">
+                        <div fxLayout="row" class="add-btn cursor-pointer" fxLayoutAlign="start center">
+                            <mat-icon class="icon padding-right-5">add_circle_outline</mat-icon> <b> Add to Basket</b>
                         </div>
-                    </td>
-                </tr>
-            </table>
-            <mat-paginator [pageSizeOptions]="[25,50,75,100]" showFirstLastButtons>
-            </mat-paginator>
-            
-        </mat-drawer-content>
-    </mat-drawer-container>
+                    </ng-container>
+                    <ng-template #other_template>{{column.cell(element)}}
+                    </ng-template>
+                </ng-template>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                <div class="element-detail"
+                    [@detailExpand]="element?.id == expandedElement?.id ? 'expanded' : 'collapsed'">
+                    <div class="element-detail-content padding-top-bottom-20 full-width" fxLayoutAlign="center center">
+                        <mat-card>
+                            <div fxLayout="column" fxLayoutGap="15px">
+                                <div fxLayout="row" fxLayoutGap="15px" *ngIf="expandedElement?.warehouseName">
+                                    <span class="grid-label">Warehouse Name:</span>
+                                    <b>{{expandedElement?.warehouseName}}</b>
+                                </div>
+                                <div fxLayout="row" fxLayoutGap="15px" *ngIf="expandedElement?.carLocation">
+                                    <span class="grid-label">Car Location:</span>
+                                    <b>{{expandedElement?.carLocation}}</b>
+                                </div>
+                            </div>
+                        </mat-card>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+            [class.expanded-row]="expandedElement?.id === element?.id">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-row"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[25,50,75,100]" showFirstLastButtons>
+    </mat-paginator>
 </div>

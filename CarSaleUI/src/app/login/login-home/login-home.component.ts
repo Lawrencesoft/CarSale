@@ -40,7 +40,7 @@ export class LoginHomeComponent implements OnInit {
     if (this.loginForm.valid) {
       this.loginErrorTxt = '';
       const loginForm = this.loginForm.getRawValue();
-      if (loginForm.userName === 'username' && loginForm.password === 'password') {
+      if (loginForm.userName === 'admin' && loginForm.password === 'password') {
         this.router.navigate([ 'car-sale' ]);
         this.authService.isLoggedIn = true;
         localStorage.setItem('isLoggedIn', 'true');

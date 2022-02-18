@@ -21,7 +21,7 @@
                             <button id="login-btn" [disabled]="!loginForm.valid" type="button" color="primary"
                                 mat-raised-button class="login-btn text-bold-uppercase" (click)="onLogin()">login
                             </button>
-                            <mat-error *ngIf="loginErrorTxt">{{loginErrorTxt}}</mat-error>
+                            <mat-error id="login-error-txt" *ngIf="loginErrorTxt">{{loginErrorTxt}}</mat-error>
                         </div>
                     </div>
                 </div>
