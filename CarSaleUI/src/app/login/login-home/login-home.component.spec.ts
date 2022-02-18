@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CarSaleHomeComponent } from 'New folder/src/app/car-sale/car-sale-home/car-sale-home.component';
+import { CarSaleHomeComponent } from 'src/app/car-sale/car-sale-home/car-sale-home.component';
 import { AuthService } from 'src/app/shared/auth.service';
 
 import { LoginHomeComponent } from './login-home.component';
