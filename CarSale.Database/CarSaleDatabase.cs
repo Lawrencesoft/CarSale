@@ -1,4 +1,6 @@
 ﻿using CarSale.Database.Model;
+using CarSale.Database.MongoDBWebAPI;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 
 namespace CarSale.Database
@@ -8,6 +10,13 @@ namespace CarSale.Database
     /// </summary>
     public class CarSaleDatabase : ICarSaleDatabase
     {
+        private readonly IMongoDBWebAPIService _mongoDBWebAPIService;
+
+        public CarSaleDatabase(IMongoDBWebAPIService mongoDBWebAPIService)
+        {
+            _mongoDBWebAPIService = mongoDBWebAPIService;
+        }
+
 
         /// <summary>
         /// To get all the cars details from the DB
@@ -16,21 +25,23 @@ namespace CarSale.Database
         public IList<Vehicles> GetAllVehicles()
         {
             List<Vehicles> vehicleList = new List<Vehicles>();
-            var results = JsonConvert.DeserializeObject<IList<WarehouseJsonModel>>(File.ReadAllText($"{Directory.GetCurrentDirectory()}/warehouses.json"));
+
+            var results = _mongoDBWebAPIService.GetAllWarehouseDetails();
+            //var results = JsonConvert.DeserializeObject<IList<WarehouseJsonModel>>(File.ReadAllText($"{Directory.GetCurrentDirectory()}/warehouses.json"));
             if (results?.Count > 0)
             {
-                vehicleList = results.SelectMany(item => item.Cars.Vehicles.Select(vehicle => new Vehicles
+                vehicleList = results.SelectMany(item => item.cars.vehicles.Select(vehicle => new Vehicles
                 {
-                    Id = vehicle.Id,
-                    Make = vehicle.Make,
-                    Model = vehicle.Model,
-                    YearModel = vehicle.YearModel,
-                    Price = vehicle.Price,
-                    licensed = vehicle.Licensed,
-                    DateAdded = vehicle.DateAdded,
-                    WarehouseId = item.Id,
-                    WarehouseName = item.Name,
-                    CarLocation = item.Cars.Location
+                    Id = vehicle._id,
+                    Make = vehicle.make,
+                    Model = vehicle.model,
+                    YearModel = vehicle.year_model,
+                    Price = vehicle.price,
+                    licensed = vehicle.licensed,
+                    DateAdded = Convert.ToDateTime(vehicle.date_added),
+                    WarehouseId = Convert.ToInt32(item._id),
+                    WarehouseName = item.name,
+                    CarLocation = item.cars.location
                 })).ToList();
             }
             return vehicleList;

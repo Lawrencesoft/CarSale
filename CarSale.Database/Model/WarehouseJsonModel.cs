@@ -5,46 +5,26 @@ namespace CarSale.Database.Model
     /// <summary>
     /// Warehouse class to retrive the data from json file
     /// </summary>
-    public class WarehouseJsonModel
+    public class WarehouseDetails
     {
-        [JsonProperty("_id")]
-        public int Id { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("location")]
-        public Location Location { get; set; }
-
-        [JsonProperty("cars")]
-        public Cars Cars { get; set; }
+        public string _id { get; set; }
+        public string name { get; set; }
+        public Location location { get; set; }
+        public Cars cars { get; set; }
     }
-   
+
     /// <summary>
     /// This class used have the Vehicle details
     /// </summary>
     public class Vehicle
     {
-        [JsonProperty("_id")]
-        public int Id { get; set; }
-
-        [JsonProperty("make")]
-        public string Make { get; set; }
-
-        [JsonProperty("model")]
-        public string Model { get; set; }
-
-        [JsonProperty("year_model")]
-        public int YearModel { get; set; }
-
-        [JsonProperty("price")]
-        public double Price { get; set; }
-
-        [JsonProperty("licensed")]
-        public bool Licensed { get; set; }
-
-        [JsonProperty("date_added")]
-        public DateTime DateAdded { get; set; }
+        public int _id { get; set; }
+        public string make { get; set; }
+        public string model { get; set; }
+        public int year_model { get; set; }
+        public double price { get; set; }
+        public bool licensed { get; set; }
+        public string date_added { get; set; }
     }
 
     /// <summary>
@@ -52,11 +32,8 @@ namespace CarSale.Database.Model
     /// </summary>
     public class Cars
     {
-        [JsonProperty("location")]
-        public string Location { get; set; }
-
-        [JsonProperty("vehicles")]
-        public List<Vehicle> Vehicles { get; set; }
+        public string location { get; set; }
+        public List<Vehicle> vehicles { get; set; }
     }
 
     /// <summary>
@@ -64,10 +41,9 @@ namespace CarSale.Database.Model
     /// </summary>
     public class Location
     {
-        [JsonProperty("lat")]
-        public string Latitude { get; set; }
-
-        [JsonProperty("long")]
-        public string Longitude { get; set; }
+        public string lat { get; set; }
+        public string @long { get; set; }
     }
+
+
 }

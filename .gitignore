@@ -14,3 +14,6 @@
 /CareSale.API/obj/Debug/net6.0
 /CareSale.API/obj/Release/net6.0
 /CareSale.API/obj
+/CarSaleUI/node_modules/@angular/common/locales
+/CarSaleUI/node_modules
+/CarSaleUI/.angular

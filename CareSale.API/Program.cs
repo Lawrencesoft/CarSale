@@ -1,5 +1,8 @@
 using CarSale.Business;
 using CarSale.Database;
+using CarSale.Database.MongoDBWebAPI;
+using CarSale.Database.MongoDBWebAPI.Models;
+using CarSale.Database.MongoDBWebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +15,9 @@ builder.Services.AddSwaggerGen();
 
 //Setup Dependancy Injection
 builder.Services.AddSingleton<ICarSaleBusiness, CarSaleBusiness>()
-    .AddSingleton<ICarSaleDatabase, CarSaleDatabase>();
+    .AddSingleton<ICarSaleDatabase, CarSaleDatabase>()
+    .AddSingleton<IMongoDBWebAPIService, MongoDBWebAPIService>()
+    .AddSingleton< ICarSaleDatabaseSettings,CarSaleDatabaseSettings>();
 
 var app = builder.Build();
 

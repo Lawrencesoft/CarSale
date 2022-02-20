@@ -1,5 +1,7 @@
 ﻿using CarSale.Database;
+using CarSale.Database.MongoDBWebAPI;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using System;
 
 namespace CarSale.API.Test
@@ -9,9 +11,11 @@ namespace CarSale.API.Test
     {
 
         private readonly ICarSaleDatabase _carSaleDatabase;
+        private readonly IMongoDBWebAPIService _mongoDBWebAPIService;
         public CarSaleDatabaseTest()
         {
-            _carSaleDatabase = new CarSaleDatabase();
+            _mongoDBWebAPIService = Substitute.For<IMongoDBWebAPIService>();
+            _carSaleDatabase = new CarSaleDatabase(_mongoDBWebAPIService);
         }
 
         [TestMethod]
